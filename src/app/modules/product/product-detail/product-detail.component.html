@@ -1,0 +1,205 @@
+<div class="bg-white text-gray-900">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center space-x-2 text-sm text-gray-600 mb-6">
+      <a href="/" class="hover:text-red-600">Trang chủ</a>
+      <span>/</span>
+      <a href="/category/phone" class="hover:text-red-600">Điện thoại</a>
+      <span>/</span>
+      <span class="text-gray-900">
+        {{ product?.name || 'Tên sản phẩm' }}
+      </span>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <!-- Product Images -->
+      <div class="space-y-4">
+        @if (product?.mainImage) {
+        <div class="aspect-square relative overflow-hidden rounded-lg border">
+          <img [src]="product.mainImage.url" [alt]="product?.name" class="object-cover w-full h-full" />
+        </div>
+        } @if (product?.subImages?.length) {
+        <div class="grid grid-cols-4 gap-2">
+          @for (img of product.subImages; track img._id) {
+          <button class="aspect-square overflow-hidden rounded-lg border-2 border-gray-200">
+            <img [src]="img.url" [alt]="img.name" class="object-cover w-full h-full" />
+          </button>
+          }
+        </div>
+        }
+      </div>
+
+      <!-- Product Info -->
+      <div class="space-y-6">
+        <div>
+          @if(product?.category){
+          <span
+            class="inline-block bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm mb-2">{{product.category}}</span>
+          }
+          @if(product?.name){
+          <h1 class="text-2xl font-bold mb-2">{{product.name}}</h1>
+          }
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="flex items-center space-x-2">
+              <div class="flex text-yellow-400">★★★★☆</div>
+              <span class="text-sm text-gray-600">4.5 (120 đánh giá)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Price -->
+        <div class="flex items-center space-x-4">
+          @if(product?.price){
+          <span class="text-3xl font-bold text-red-600">{{product.price}}₫</span>
+          }
+          @if(product?.price){
+          <span class="text-lg text-gray-500 line-through">{{product.price}}₫</span>
+          }
+          @if(product?.price){
+          <span class="bg-red-100 text-red-800 px-2 py-1 text-sm rounded">-20%</span>
+          }
+        </div>
+
+        <!-- Variants -->
+        <!-- <div>
+          <h3 class="font-semibold mb-3">Dung lượng:</h3>
+          <div class="grid grid-cols-2 gap-2">
+            <button class="p-3 border border-red-500 bg-red-50 rounded-lg text-center">
+              <div class="font-medium">128GB</div>
+              <div class="text-sm text-red-600">12.000.000₫</div>
+            </button>
+            <button class="p-3 border border-gray-200 rounded-lg text-center hover:border-gray-300">
+              <div class="font-medium">256GB</div>
+              <div class="text-sm text-red-600">13.500.000₫</div>
+            </button>
+          </div>
+        </div> -->
+
+        <!-- Quantity -->
+        <div>
+          <h3 class="font-semibold mb-3">Số lượng:</h3>
+          <div class="flex items-center space-x-4">
+            <div class="flex border rounded-lg">
+              <button class="px-3 py-2 hover:bg-gray-100">-</button>
+              <span class="px-4 py-2 border-x">1</span>
+              <button class="px-3 py-2 hover:bg-gray-100">+</button>
+            </div>
+            @if(product?.stock){
+            <span class="text-sm text-gray-600">Còn {{product.stock}} sản phẩm</span>
+            }@else {
+            <span class="text-sm text-gray-600">Hết hàng</span>
+            }
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="space-y-4">
+          <div class="flex space-x-4">
+            <button (click)="addToCart(1)" class="flex-1 bg-red-600 hover:bg-red-700 text-white h-12 rounded-lg">
+              Thêm vào giỏ hàng
+            </button>
+            <button class="h-12 w-12 border rounded-lg">♡</button>
+            <button class="h-12 w-12 border rounded-lg">⇪</button>
+          </div>
+          <button class="w-full h-12 bg-orange-600 hover:bg-orange-700 text-white rounded-lg">
+            Mua ngay
+          </button>
+        </div>
+
+        <!-- Features -->
+        <div class="grid grid-cols-3 gap-4 pt-4 border-t">
+          <div class="flex items-center space-x-2 text-sm">
+            <span class="text-green-600">🚚</span><span>Miễn phí vận chuyển</span>
+          </div>
+          <div class="flex items-center space-x-2 text-sm">
+            <span class="text-blue-600">🛡️</span><span>Bảo hành 12 tháng</span>
+          </div>
+          <div class="flex items-center space-x-2 text-sm">
+            <span class="text-purple-600">↩️</span><span>Đổi trả 7 ngày</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs - Mô tả, Thông số, Đánh giá -->
+    <div class="w-full">
+      <div class="grid grid-cols-3 text-center border-b">
+        <button class="py-3 font-semibold border-b-2 border-red-600">
+          Mô tả
+        </button>
+        <button class="py-3 text-gray-600 hover:text-red-600">
+          Thông số kỹ thuật
+        </button>
+        <button class="py-3 text-gray-600 hover:text-red-600">
+          Đánh giá (120)
+        </button>
+      </div>
+
+      <div class="mt-6">
+        <!-- Mô tả sản phẩm -->
+        <div class="mb-6">
+          <h2 class="text-lg font-semibold mb-2">Mô tả sản phẩm</h2>
+          <p class="text-gray-700 leading-relaxed">
+            {{product?.description}}
+          </p>
+          <!-- <ul class="list-disc list-inside space-y-1 mt-4 text-gray-700">
+            <li>Chip A17 Pro với hiệu năng vượt trội</li>
+            <li>Camera 48MP với khả năng zoom quang học 5x</li>
+            <li>Màn hình Super Retina XDR 6.7 inch</li>
+            <li>Khung titan cao cấp, bền bỉ</li>
+            <li>Hỗ trợ sạc nhanh và sạc không dây</li>
+          </ul> -->
+        </div>
+
+        <!-- Thông số kỹ thuật -->
+        <div class="mb-6">
+          <h2 class="text-lg font-semibold mb-2">Thông số kỹ thuật</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex justify-between py-2 border-b">
+              <span>Màn hình</span><span>6.7" OLED</span>
+            </div>
+            <div class="flex justify-between py-2 border-b">
+              <span>RAM</span><span>8GB</span>
+            </div>
+            <!-- Thêm các thông số khác nếu cần -->
+          </div>
+        </div>
+
+        <!-- Đánh giá -->
+        <div>
+          <h2 class="text-lg font-semibold mb-4">Đánh giá từ khách hàng</h2>
+
+          <div class="mb-6">
+            <div class="text-4xl font-bold text-red-600">4.5</div>
+            <div class="text-yellow-400">★★★★☆</div>
+            <div class="text-sm text-gray-600">120 đánh giá</div>
+          </div>
+
+          <div class="space-y-4">
+            <div class="border-b pb-4">
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">Nguyễn Văn A</span>
+                <span class="text-sm text-gray-500">15/01/2024</span>
+              </div>
+              <div class="text-yellow-400">★★★★★</div>
+              <p class="text-gray-700">
+                Sản phẩm rất tốt, camera chụp ảnh đẹp, pin trâu. Giao hàng
+                nhanh.
+              </p>
+            </div>
+            <div class="border-b pb-4">
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">Trần Thị B</span>
+                <span class="text-sm text-gray-500">10/01/2024</span>
+              </div>
+              <div class="text-yellow-400">★★★★☆</div>
+              <p class="text-gray-700">
+                Máy đẹp, chạy mượt. Chỉ có điều giá hơi cao một chút.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="container mx-auto px-4 py-8">
+  <!-- Loading State -->
+  @if (loading()) {
+    <div class="text-center py-8">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600 mx-auto"></div>
+      <p class="mt-2 text-gray-600">Đang tải giỏ hàng...</p>
+    </div>
+  }
+
+  <!-- Error State -->
+  @else if (error()) {
+    <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+      <div class="flex items-center">
+        <span class="text-red-600">⚠️</span>
+        <p class="ml-2 text-red-700">{{ error() }}</p>
+        <button
+          (click)="onRefreshCart()"
+          class="ml-auto text-red-600 hover:text-red-800 underline">
+          Thử lại
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- Cart Header -->
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-2xl font-bold">
+      Giỏ hàng
+      @if (cartSummary().hasItems) {
+        <span class="text-gray-600 text-lg">({{ itemCount() }} sản phẩm)</span>
+      }
+    </h1>
+
+    @if (cartSummary().hasItems) {
+      <button
+        (click)="onClearCart()"
+        class="text-red-600 hover:text-red-700 text-sm">
+        Xóa tất cả
+      </button>
+    }
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    @if (cartSummary().hasItems) {
+      <!-- Cart items -->
+      <div class="lg:col-span-2 space-y-4">
+        @for (item of cart().items; track item.product._id) {
+          <app-cart-item [item]="item" />
+        }
+      </div>
+
+      <!-- Order summary -->
+      <app-order-summary [cartInfo]="cart()" />
+    } @else {
+      <div class="lg:col-span-3 text-center text-gray-500 py-12">
+        <h2 class="text-xl mb-4">Giỏ hàng của bạn đang trống</h2>
+        <p class="mb-6">Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm</p>
+        <button
+          routerLink="/"
+          class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-md transition-colors">
+          Tiếp tục mua sắm
+        </button>
+      </div>
+    }
+  </div>
+</div>

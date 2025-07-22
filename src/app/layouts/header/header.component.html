@@ -1,0 +1,49 @@
+<header class="sticky top-0 z-50 bg-primary shadow-sm text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+      <!-- Logo -->
+      <a href="/" class="text-2xl font-bold text-[--color-primary]">ShopX</a>
+
+      <!-- Navigation links (hidden on mobile) -->
+      <nav class="hidden md:flex space-x-8 text-[--color-text] font-medium">
+        <a href="#" class="">Trang chủ</a>
+        <a href="#" class="">Sản phẩm</a>
+        <a href="#" class="">Ưu đãi</a>
+        <a href="#" class="">Liên hệ</a>
+      </nav>
+
+      <!-- Right side icons -->
+      <div class="flex items-center space-x-4">
+        <!-- Search (optional) -->
+        <button class="hidden md:block text-[--color-muted] ">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M21 21l-4.35-4.35M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14z" />
+          </svg>
+        </button>
+
+        <!-- Cart -->
+        <button type="button" routerLink="/cart" class="relative text-[--color-muted]">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9h14l-2-9M10 21a1 1 0 1 1-2 0m10 0a1 1 0 1 1-2 0" />
+          </svg>
+          <span
+            class="absolute -top-1 -right-1 text-xs bg-red-500 text-white rounded-full px-1.5 py-0.5">3</span>
+        </button>
+
+        <!-- Login -->
+        <a routerLink="/login" class="hidden md:inline">
+          Đăng nhập
+        </a>
+
+        <!-- Mobile menu button -->
+        <button class="md:hidden text-[--color-muted] ">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
