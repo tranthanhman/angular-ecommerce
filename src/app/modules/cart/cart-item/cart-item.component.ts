@@ -13,4 +13,8 @@ import { CartItem } from '@models/cart.model';
 export class CartItemComponent {
   item = input.required<CartItem>();
   cartService = inject(CartService);
+
+  onQuantityChange(quantity: number) {
+    this.cartService.updateQuantity(this.item().product._id, quantity);
+  }
 }

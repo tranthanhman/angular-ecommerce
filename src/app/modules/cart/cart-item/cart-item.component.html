@@ -24,9 +24,11 @@
           <div class="text-sm text-gray-500 line-through">{{'$'+ item().product.price }}</div>
         </div>
         <div class="flex items-center space-x-2">
-          <button class="h-8 w-8 border rounded">-</button>
-          <span class="w-12 text-center font-medium">1</span>
-          <button class="h-8 w-8 border rounded">+</button>
+          <button (click)="onQuantityChange(item().quantity - 1)" class="h-8 w-8 border rounded">-</button>
+          <span class="w-12 text-center font-medium w-[40px] text-center">
+            {{ item().quantity }}
+          </span>
+          <button (click)="onQuantityChange(item().quantity + 1)" class="h-8 w-8 border rounded">+</button>
         </div>
       </div>
     </div>

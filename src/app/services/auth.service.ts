@@ -8,12 +8,14 @@ import {
   Observable,
   tap,
   throwError,
+  Subject,
 } from 'rxjs';
 import { Router } from '@angular/router';
 import { ApiResponse } from '@utils/api';
 import { AuthResponse } from '@models/auth.model';
 import { environment } from '@environments/environment';
-
+import { UserService } from './user.service';
+import { User } from '@models/user.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -27,29 +29,43 @@ const httpOptions = {
 export class AuthService {
   private tokenKey: string = 'token';
   private refreshTokenKey: string = 'refresh_token';
-  url: any = `${environment.apiUrl}/users/login`;
+  url: any = `${environment.apiUrl}/users`;
   errorSubject = new BehaviorSubject<any>(null);
   errorMessage: any = this.errorSubject.asObservable();
+
+  // Thêm subject để notify khi login thành công
+  private loginSuccessSubject = new Subject<void>();
+  public loginSuccess$ = this.loginSuccessSubject.asObservable();
+
+  // Thêm user state management
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private userService: UserService // Inject UserService
   ) {}
 
   private isBrowser(): boolean {
     return isPlatformBrowser(this.platformId);
   }
 
+  private getLocalStorage(): Storage | null {
+    return this.isBrowser() ? window.localStorage : null;
+  }
+
   isLoggedIn(): boolean {
-    if (!this.isBrowser()) return false;
-    return !!window.localStorage.getItem(this.tokenKey);
+    const storage = this.getLocalStorage();
+    if (!storage) return false;
+    return !!storage.getItem(this.tokenKey);
   }
 
   login(username: string, password: string) {
     this.http
       .post<ApiResponse<AuthResponse>>(
-        this.url,
+        `${this.url}/login`,
         {
           username,
           password,
@@ -58,11 +74,15 @@ export class AuthService {
       )
       .pipe(
         tap((res) => {
-          if(res.success){
+          if (res.success) {
             this.saveToken(res.data.accessToken);
             this.saveRefreshToken(res.data.refreshToken);
+            // Lấy user profile ngay sau khi login
+            this.loadUserProfile();
+            // Emit event khi login thành công
+            this.loginSuccessSubject.next();
             this.router.navigate(['/']);
-          }else{
+          } else {
             this.errorSubject.next(res.message);
           }
         }),
@@ -75,36 +95,60 @@ export class AuthService {
       .subscribe();
   }
 
+  private loadUserProfile() {
+    this.userService.getProfile().subscribe((res) => {
+      if (res.success) {
+        this.currentUserSubject.next(res.data);
+      }
+    });
+  }
+
   logout(): void {
-    if (this.isBrowser()) {
-      window.localStorage.removeItem(this.tokenKey);
+    const storage = this.getLocalStorage();
+    if (storage) {
+      storage.removeItem(this.tokenKey);
     }
+    // Clear user data khi logout
+    this.currentUserSubject.next(null);
   }
 
   // ✅ Lưu access token
   saveToken(token: string): void {
-    localStorage.setItem(this.tokenKey, token);
+    const storage = this.getLocalStorage();
+    if (storage) {
+      storage.setItem(this.tokenKey, token);
+    }
   }
 
   // ✅ Lưu refresh token
   saveRefreshToken(token: string): void {
-    localStorage.setItem(this.refreshTokenKey, token);
+    const storage = this.getLocalStorage();
+    if (storage) {
+      storage.setItem(this.refreshTokenKey, token);
+    }
   }
 
   getToken(): string | null {
-    if (!this.isBrowser()) return null;
-    return window.localStorage.getItem(this.tokenKey);
+    const storage = this.getLocalStorage();
+    if (!storage) return null;
+    return storage.getItem(this.tokenKey);
   }
 
   refreshToken(): Observable<string> {
-    const refreshToken = localStorage.getItem(this.refreshTokenKey);
+    const storage = this.getLocalStorage();
+    const refreshToken = storage ? storage.getItem(this.refreshTokenKey) : null;
     return this.http
-      .post<{ accessToken: string }>('https://your-api.com/api/auth/refresh', {
+      .post<{ accessToken: string }>(`${this.url}/refresh-token`, {
         refreshToken,
       })
       .pipe(
         tap((res) => {
-          localStorage.setItem('token', res.accessToken);
+          const storage = this.getLocalStorage();
+          if (storage) {
+            storage.setItem('token', res.accessToken);
+          }
+          // Lấy lại user profile khi refresh token thành công
+          this.loadUserProfile();
         }),
         map((res) => res.accessToken)
       );

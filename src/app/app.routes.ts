@@ -1,10 +1,9 @@
 import { Routes } from '@angular/router';
-import {ProductListComponent} from './pages/home/components/product-list/product-list.component';
-import {CartComponent} from './modules/cart/cart.component';
-import {LoginComponent} from './modules/auth/login/login.component';
-import {ProductDetailComponent} from './modules/product/product-detail/product-detail.component';
-import { ProductWithFilterComponent } from './modules/product-with-filter/product-with-filter/product-with-filter.component';
-import {HomeComponent} from './pages/home/home.component';
+import { CartComponent } from './modules/cart/cart.component';
+import { LoginComponent } from './modules/auth/login/login.component';
+import { ProductDetailComponent } from './modules/product/product-detail/product-detail.component';
+import { CategoryComponent } from './modules/category/category.component';
+import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
   {
@@ -18,8 +17,8 @@ export const routes: Routes = [
     // canActivate: [AuthGuard]
   },
   {
-    path: 'san-pham',
-    component: ProductWithFilterComponent,
+    path: 'category/:id ',
+    component: CategoryComponent,
   },
   {
     path: 'product/:id',

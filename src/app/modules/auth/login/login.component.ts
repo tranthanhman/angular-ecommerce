@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
@@ -16,17 +16,13 @@ export class LoginComponent implements OnInit {
   isUsernameValid: boolean = true;
   error: any = '';
 
-  returnUrl: string = '/';
+  returnUrl: string = '';
 
-  constructor(private authService: AuthService, private route: ActivatedRoute) {}
+  authService = inject(AuthService);
+  route = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    // Safely access route and snapshot
-    if (this.route && this.route.snapshot && this.route.snapshot.queryParamMap) {
-      this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
-    } else {
-      this.returnUrl = '/';
-    }
+    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
 
     this.authService.errorSubject.subscribe((errorMessage) => {
       this.error = errorMessage;
@@ -53,6 +49,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.isUsernameValid) {
+      console.log('object');
       this.authService.login(this.username, this.password);
     }
   }

@@ -29,7 +29,6 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('🟢 Cart Component initialized');
-    // Cart tự động load từ service constructor
   }
 
   onRefreshCart(): void {

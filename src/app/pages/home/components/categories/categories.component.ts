@@ -1,28 +1,17 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { CategoryService } from '@services/category.service';
+import { Component, input, OnInit } from '@angular/core';
 import { Category } from '@models/category';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home-categories',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './categories.component.html',
   styles: ``,
 })
 export class HomeCategoriesComponent implements OnInit {
-  categories = signal<Category[]>([]);
-
-  constructor(private categoryService: CategoryService) {}
-
-  loadCategories(): void {
-    this.categoryService.getCategories().subscribe((res) => {
-      if (res.success && res.statusCode === 200) {
-        const { categories } = res.data;
-        this.categories.set(categories);
-      }
-    });
-  }
+  categories = input.required<Category[] | null>();
 
   ngOnInit(): void {
-    this.loadCategories();
+    console.log('init component home categories');
   }
 }

@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from '@utils/api';
 import { AuthService } from './auth.service';
 import { Product } from '@models/product.model';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class CartService {
   private platformId = inject(PLATFORM_ID);
 
   private readonly localKey = 'cart';
-  private readonly url = 'https://api.freeapi.app/api/v1/ecommerce/cart';
+  private readonly url = `${environment.apiUrl}/ecommerce/cart`;
 
   // 🌐 Check if running in browser
   private get isBrowser(): boolean {
@@ -49,15 +50,8 @@ export class CartService {
 
   totalAmount = computed(() => this.cart().cartTotal);
 
-  constructor() {
-    // ⚠️ Chỉ initialize cart khi chạy trong browser
-    if (this.isBrowser) {
-      this.initializeCart();
-    }
-  }
-
   // 🚀 Initialize cart on service creation
-  private initializeCart(): void {
+  initializeCart(): void {
     if (this.auth.isLoggedIn()) {
       this.loadServerCart();
     } else {
@@ -246,7 +240,7 @@ export class CartService {
 
     // Sync với localStorage hoặc server
     if (this.auth.isLoggedIn()) {
-      // TODO: Implement server sync for quantity update
+      this.addToServerCart(productId, quantity);
     } else {
       this.saveToLocalStorage(updatedItems);
     }

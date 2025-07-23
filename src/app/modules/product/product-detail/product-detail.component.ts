@@ -11,16 +11,14 @@ import { CartService } from '@services/cart.service';
   styles: ``,
 })
 export class ProductDetailComponent {
+  cartService = inject(CartService);
+  route = inject(ActivatedRoute)
+  productService = inject(ProductService);
+  router = inject(Router);
+
   productId: string = '';
   product: Product | any = null;
   isLoading: boolean = false;
-  cartService = inject(CartService);
-
-  constructor(
-    private route: ActivatedRoute,
-    private productService: ProductService,
-    private router: Router
-  ) {}
 
   // Fetch Product
   fetchProduct() {

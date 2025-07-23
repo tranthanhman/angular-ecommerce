@@ -1,3 +1,4 @@
+@if(categories()){
 <div class="py-8">
   <div class="flex justify-between" dir="ltr">
     <div class="flex flex-col">
@@ -12,7 +13,7 @@
   <!-- List -->
   <div class="flex overflow-auto no-scrollbar mt-4">
     @for (category of categories(); track category._id) {
-    <a [href]="category._id"
+    <a [routerLink]="['/category', category._id]"
       class="group flex flex-col items-center p-4 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
       <div
         class="bg-gradient-to-r {{ category.name }} p-4 rounded-full mb-3 group-hover:scale-110 transition-transform duration-300 shadow-lg">
@@ -29,3 +30,4 @@
     }
   </div>
 </div>
+}
