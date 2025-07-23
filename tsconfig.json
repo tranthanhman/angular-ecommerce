@@ -17,14 +17,14 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "baseUrl" : "./src",
+    "baseUrl" : "./",
     "paths" : {
       "@environments/*" : ["environments/*"],
-      "@layout/*" : ["app/layout/*"],
-      "@models/*" : ["app/models/*"],
-      "@services/*" : ["app/services/*"],
-      "@utils/*" : ["app/utils/*"],
-      "@modules/*" : ["app/modules/*"],
+      "@layout/*" : ["./src/app/layout/*"],
+      "@models/*" : ["./src/app/models/*"],
+      "@services/*" : ["./src/app/services/*"],
+      "@utils/*" : ["./src/app/utils/*"],
+      "@modules/*" : ["./src/app/modules/*"],
     }
   },
   "angularCompilerOptions": {

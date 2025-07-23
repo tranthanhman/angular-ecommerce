@@ -4,6 +4,18 @@ export interface Image {
   url: string;
 }
 
+export interface ProductResponse {
+  products: Product[];
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+  limit: number;
+  nextPage: number | null;
+  prevPage: number | null;
+  serialNumberStartFrom: number;
+  totalProducts: number;
+  totalPages: number;
+}
+
 export interface Product {
   _id: string;
   name: string;

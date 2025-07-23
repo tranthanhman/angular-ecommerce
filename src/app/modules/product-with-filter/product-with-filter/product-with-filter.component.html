@@ -1,0 +1,141 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <!-- Breadcrumb -->
+  <nav class="flex items-center space-x-2 text-sm text-gray-600 mb-6">
+    <a href="/" class="hover:text-red-600">Trang chủ</a>
+    <span>/</span>
+    <span class="text-gray-900">Điện thoại</span>
+  </nav>
+
+  <!-- Page header -->
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold">Điện thoại</h1>
+
+    <div class="flex items-center space-x-4">
+      <!-- Sort -->
+      <select class="w-48 px-3 py-2 border rounded">
+        <option selected>Phổ biến nhất</option>
+        <option>Mới nhất</option>
+        <option>Giá thấp đến cao</option>
+        <option>Giá cao đến thấp</option>
+        <option>Đánh giá cao nhất</option>
+      </select>
+
+      <!-- View mode buttons -->
+      <div class="flex border rounded-lg overflow-hidden">
+        <button class="px-3 py-2 bg-gray-100">🔲</button>
+        <button class="px-3 py-2">📃</button>
+      </div>
+
+      <!-- Filter button (mobile only) -->
+      <button class="md:hidden px-3 py-2 border rounded flex items-center bg-transparent">
+        <span class="mr-2">🔍</span> Lọc
+      </button>
+    </div>
+  </div>
+
+  <div class="flex gap-8">
+    <!-- Sidebar -->
+    <aside class="hidden md:block w-64 flex-shrink-0">
+      <div class="sticky top-4 space-y-6">
+        <!-- Brand filter -->
+        <div>
+          <h3 class="font-semibold mb-3">Thương hiệu</h3>
+          <div class="space-y-2">
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" /> <span>Apple</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" /> <span>Samsung</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" /> <span>Xiaomi</span>
+            </label>
+            <!-- ... -->
+          </div>
+        </div>
+
+        <!-- Price filter -->
+        <div>
+          <h3 class="font-semibold mb-3">Khoảng giá</h3>
+          <div class="space-y-2">
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" /> <span>Dưới 5 triệu</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" /> <span>5 - 10 triệu</span>
+            </label>
+            <!-- ... -->
+          </div>
+          <div class="mt-4">
+            <label class="text-sm block mb-2">Tùy chỉnh: 0₫ - 50.000.000₫</label>
+            <input type="range" min="0" max="50000000" step="1000000" class="w-full" />
+          </div>
+        </div>
+
+        <!-- Rating filter -->
+        <div>
+          <h3 class="font-semibold mb-3">Đánh giá</h3>
+          <div class="space-y-2">
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" />
+              <span>⭐⭐⭐⭐⭐ từ 5 sao</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" />
+              <span>⭐⭐⭐⭐ từ 4 sao</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Products grid -->
+    <main class="flex-1">
+      <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Product Card -->
+        <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+          <div class="p-4">
+            <div class="relative mb-4">
+              <a href="/product/1">
+                <img src="/placeholder.svg" alt="iPhone 15 Pro Max" class="w-full h-48 object-cover rounded-lg" />
+              </a>
+              <span class="absolute top-2 left-2 bg-green-600 text-white px-2 py-1 text-xs rounded">Mới</span>
+            </div>
+            <a href="/product/1" class="block font-semibold hover:text-red-600 line-clamp-2">
+              iPhone 15 Pro Max 256GB
+            </a>
+            <div class="flex items-center space-x-2 mt-2">
+              <span class="text-yellow-400">⭐ 4.9</span>
+              <span class="text-sm text-gray-500">(234 đánh giá)</span>
+            </div>
+            <div class="mt-2">
+              <div class="text-lg font-bold text-red-600">34.990.000₫</div>
+              <div class="text-sm text-gray-500 line-through">36.990.000₫</div>
+            </div>
+            <div class="flex space-x-2 mt-4">
+              <button
+                class="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center justify-center">
+                🛒 Mua ngay
+              </button>
+              <button class="px-4 py-2 border rounded">♡</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Repeat more cards... -->
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex justify-center mt-8">
+        <div class="flex space-x-2">
+          <button class="px-3 py-2 border rounded text-gray-400" disabled>Trước</button>
+          <button class="px-3 py-2 bg-red-600 text-white rounded">1</button>
+          <button class="px-3 py-2 border rounded">2</button>
+          <button class="px-3 py-2 border rounded">3</button>
+          <button class="px-3 py-2 border rounded">Sau</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</div>

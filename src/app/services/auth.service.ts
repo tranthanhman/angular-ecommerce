@@ -12,6 +12,8 @@ import {
 import { Router } from '@angular/router';
 import { ApiResponse } from '@utils/api';
 import { AuthResponse } from '@models/auth.model';
+import { environment } from '@environments/environment';
+
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -25,7 +27,7 @@ const httpOptions = {
 export class AuthService {
   private tokenKey: string = 'token';
   private refreshTokenKey: string = 'refresh_token';
-  url: any = 'https://api.freeapi.app/api/v1/users/login';
+  url: any = `${environment.apiUrl}/users/login`;
   errorSubject = new BehaviorSubject<any>(null);
   errorMessage: any = this.errorSubject.asObservable();
 
