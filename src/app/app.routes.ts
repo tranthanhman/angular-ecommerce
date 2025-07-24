@@ -4,6 +4,7 @@ import { LoginComponent } from './modules/auth/login/login.component';
 import { ProductDetailComponent } from './modules/product/product-detail/product-detail.component';
 import { CategoryComponent } from './modules/category/category.component';
 import { HomeComponent } from './pages/home/home.component';
+import { RegisterComponent } from './modules/auth/register/register.component';
 
 export const routes: Routes = [
   {
@@ -27,5 +28,9 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
   },
 ];

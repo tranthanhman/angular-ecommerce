@@ -52,7 +52,7 @@ export class CartService {
 
   // 🚀 Initialize cart on service creation
   initializeCart(): void {
-    if (this.auth.isLoggedIn()) {
+    if (this.auth.isAuthenticated()) {
       this.loadServerCart();
     } else {
       this.loadLocalCart();
@@ -113,7 +113,7 @@ export class CartService {
     this._loading.set(true);
     this._error.set(null);
 
-    if (this.auth.isLoggedIn()) {
+    if (this.auth.isAuthenticated()) {
       return this.addToServerCart(product._id, quantity).pipe(
         tap((response) => {
           if (response.success) {
@@ -164,7 +164,7 @@ export class CartService {
     this._loading.set(true);
     this._error.set(null);
 
-    if (this.auth.isLoggedIn()) {
+    if (this.auth.isAuthenticated()) {
       return this.http.delete<ApiResponse<CartInfo>>(`${this.url}/item/${productId}`, {
         headers: {
           Authorization: `Bearer ${this.getToken()}`,
@@ -239,7 +239,7 @@ export class CartService {
     this._cartState.set(updatedCart);
 
     // Sync với localStorage hoặc server
-    if (this.auth.isLoggedIn()) {
+    if (this.auth.isAuthenticated()) {
       this.addToServerCart(productId, quantity);
     } else {
       this.saveToLocalStorage(updatedItems);
@@ -249,7 +249,7 @@ export class CartService {
   // 🧹 Clear cart
   clearCart(): void {
     const emptyCart: CartInfo = {
-      id: this.auth.isLoggedIn() ? this._cartState().id : 'local-cart',
+      id: this.auth.isAuthenticated() ? this._cartState().id : 'local-cart',
       items: [],
       cartTotal: 0,
       discountedTotal: 0,
@@ -257,7 +257,7 @@ export class CartService {
 
     this._cartState.set(emptyCart);
 
-    if (!this.auth.isLoggedIn() && this.isBrowser) {
+    if (!this.auth.isAuthenticated() && this.isBrowser) {
       localStorage.removeItem(this.localKey);
     }
   }

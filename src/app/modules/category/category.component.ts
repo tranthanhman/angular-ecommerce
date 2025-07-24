@@ -15,12 +15,7 @@ export class CategoryComponent implements OnInit {
   productService = inject(ProductService);
   route = inject(ActivatedRoute);
 
-  constructor() {
-    // Log whenever products change
-    effect(() => {
-      console.log('Products:', this.products());
-    });
-  }
+  constructor() {}
 
   loadProductsByCategoryId(categoryId: string): void {
     this.productService.getProductsByCategoryId(categoryId).subscribe((res) => {

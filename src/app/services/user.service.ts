@@ -15,4 +15,13 @@ export class UserService {
   getProfile(){
     return this.http.get<ApiResponse<User>>(`${this.url}/profile`);
   }
+
+  addToWishlist(productId: string){
+    return this.http.post<ApiResponse<any>>(`${this.url}/wishlist`, {productId});
+  }
+
+  removeFromWishlist(productId: string){
+    return this.http.delete<ApiResponse<any>>(`${this.url}/wishlist/${productId}`);
+  }
+  
 }

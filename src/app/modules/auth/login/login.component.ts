@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
 
   authService = inject(AuthService);
   route = inject(ActivatedRoute);
+  router = inject(Router);
 
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
@@ -49,8 +50,18 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.isUsernameValid) {
-      console.log('object');
-      this.authService.login(this.username, this.password);
+
+      this.authService.login(this.username, this.password).subscribe({
+        next: (res) => {
+          if(res.statusCode===200 && res.success){
+            this.authService.setUser(res.data.accessToken, res.data.user);
+            this.router.navigate(['/']);
+          }
+        },
+        error: () => {
+          this.error = 'Login failed';
+        }
+      });
     }
   }
 }

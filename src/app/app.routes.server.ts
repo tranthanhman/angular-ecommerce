@@ -14,6 +14,10 @@ export const serverRoutes: ServerRoute[] = [
     path: 'login',
     renderMode: RenderMode.Prerender
   },
+  {
+    path: 'register',
+    renderMode: RenderMode.Prerender
+  },
   // Dynamic routes - sử dụng server-side rendering
   {
     path: 'product/:id',

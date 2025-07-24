@@ -23,18 +23,7 @@
         </button>
 
         <!-- Login -->
-        @if(!isLoggedIn){
-        <a routerLink="/login" class="hidden md:inline">
-          Đăng nhập
-        </a>
-        }@else{
-        <a routerLink="/profile" class="hidden md:inline flex items-center gap-2">
-          <!-- <img [src]="user()?.avatar?.url" alt="{{user()?.username}}" class="w-10 h-10 rounded-full"> -->
-          <span>
-            {{user()?.firstName}} {{user()?.lastName}}
-          </span>
-        </a>
-        }
+       <app-profile [isLoggedIn]="authService.isAuthenticated()" [user]="authService.currentUser" />
 
         <!-- Cart -->
         <button type="button" routerLink="/cart" class="relative text-[--color-muted]">
@@ -45,7 +34,8 @@
             <circle cx="19" cy="21" r="1" />
             <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
           </svg>
-          <span class="absolute -top-1 -right-1 text-xs bg-red-500 text-white rounded-full px-1.5 py-0.5">{{cartCount()}}</span>
+          <span
+            class="absolute -top-1 -right-1 text-xs bg-red-500 text-white rounded-full px-1.5 py-0.5">{{cartCount()}}</span>
         </button>
 
         <!-- wishlist -->

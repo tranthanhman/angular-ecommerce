@@ -1,0 +1,189 @@
+<div class="container mx-auto max-w-md w-full space-y-8 py-16">
+  <!-- Logo -->
+  <div class="text-center">
+    <a href="/" class="flex items-center justify-center space-x-2">
+      <div class="bg-red-600 text-white px-3 py-2 rounded font-bold text-xl">FPT</div>
+      <span class="font-bold text-xl text-gray-800">Shop</span>
+    </a>
+    <h2 class="mt-6 text-3xl font-bold text-gray-900">Tạo tài khoản mới</h2>
+    <p class="mt-2 text-sm text-gray-600">
+      Đã có tài khoản?
+      <a href="/account/login" class="text-red-600 hover:text-red-500">Đăng nhập ngay</a>
+    </p>
+  </div>
+
+  <!-- Form -->
+  <div class="bg-white shadow rounded-lg">
+    <div class="p-6">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+
+        <!-- Username -->
+        <div>
+          <label for="username" class="block text-sm font-medium text-gray-700">Tên đăng nhập</label>
+          <div class="relative mt-1">
+            <input
+              id="username"
+              formControlName="username"
+              type="text"
+              placeholder="Nhập tên đăng nhập"
+              class="pl-10 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-red-500"
+              [class.border-red-500]="username?.invalid && username?.touched" />
+            <svg class="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></svg>
+
+            @if(username?.touched && username?.invalid) {
+              <div class="text-red-500 text-sm mt-1">
+                @if(username?.errors?.['required']) {
+                  Tên đăng nhập là bắt buộc
+                }
+                @if(username?.errors?.['minlength']) {
+                  Tên đăng nhập phải có ít nhất 3 ký tự
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+          <div class="relative mt-1">
+            <input
+              id="email"
+              formControlName="email"
+              type="email"
+              placeholder="Nhập email của bạn"
+              class="pl-10 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-red-500"
+              [class.border-red-500]="email?.invalid && email?.touched" />
+            <svg class="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></svg>
+
+            @if(email?.touched && email?.invalid) {
+              <div class="text-red-500 text-sm mt-1">
+                @if(email?.errors?.['required']) {
+                  Email là bắt buộc
+                }
+                @if(email?.errors?.['email']) {
+                  Email không hợp lệ
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700">Mật khẩu</label>
+          <div class="relative mt-1">
+            <input
+              id="password"
+              formControlName="password"
+              type="password"
+              placeholder="Nhập mật khẩu"
+              class="pl-10 pr-10 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-red-500"
+              [class.border-red-500]="password?.invalid && password?.touched" />
+            <svg class="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></svg>
+
+            @if(password?.touched && password?.invalid) {
+              <div class="text-red-500 text-sm mt-1">
+                @if(password?.errors?.['required']) {
+                  Mật khẩu là bắt buộc
+                }
+                @if(password?.errors?.['minlength']) {
+                  Mật khẩu phải có ít nhất 6 ký tự
+                }
+              </div>
+            }
+          </div>
+          <p class="text-xs text-gray-500 mt-1">Mật khẩu phải có ít nhất 6 ký tự</p>
+        </div>
+
+        <!-- Confirm Password -->
+        <div>
+          <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Xác nhận mật khẩu</label>
+          <div class="relative mt-1">
+            <input
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              type="password"
+              placeholder="Nhập lại mật khẩu"
+              class="pl-10 pr-10 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-red-500"
+              [class.border-red-500]="(confirmPassword?.invalid && confirmPassword?.touched) || hasPasswordMismatch" />
+            <svg class="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></svg>
+
+            @if(confirmPassword?.touched && confirmPassword?.invalid) {
+              <div class="text-red-500 text-sm mt-1">
+                Xác nhận mật khẩu là bắt buộc
+              </div>
+            }
+            @if(hasPasswordMismatch) {
+              <div class="text-red-500 text-sm mt-1">
+                Mật khẩu xác nhận không khớp
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Terms -->
+        <div class="flex items-start space-x-2">
+          <input
+            id="agreeTerms"
+            formControlName="agreeTerms"
+            type="checkbox"
+            class="mt-1"
+            [class.border-red-500]="agreeTerms?.invalid && agreeTerms?.touched" />
+          <div class="flex-1">
+            <label for="agreeTerms" class="text-sm leading-5">
+              Tôi đồng ý với
+              <a href="/terms" class="text-red-600 hover:text-red-500">Điều khoản sử dụng</a> và
+              <a href="/privacy" class="text-red-600 hover:text-red-500">Chính sách bảo mật</a>
+            </label>
+            @if(agreeTerms?.touched && agreeTerms?.invalid) {
+              <div class="text-red-500 text-sm mt-1">
+                Bạn phải đồng ý với điều khoản sử dụng
+              </div>
+            }
+          </div>
+        </div>
+
+        @if(formError()) {
+          <div class="text-red-500 text-sm mt-1">
+            {{ formError() }}
+          </div>
+        }
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          [disabled]="form.invalid"
+          class="w-full bg-red-600 hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-md transition-colors">
+          Tạo tài khoản
+        </button>
+      </form>
+
+      <!-- OR -->
+      <div class="mt-6">
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white text-gray-500">Hoặc đăng ký với</span>
+          </div>
+        </div>
+
+        <!-- Social buttons -->
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <button
+            class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center hover:bg-gray-50">
+            <svg class="h-5 w-5 mr-2"><!-- Google icon --></svg>
+            Google
+          </button>
+          <button
+            class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center hover:bg-gray-50">
+            <svg class="h-5 w-5 mr-2"><!-- Facebook icon --></svg>
+            Facebook
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
