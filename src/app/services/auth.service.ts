@@ -13,7 +13,7 @@ import {
 import { Router } from '@angular/router';
 import { ApiResponse } from '@utils/api';
 import { AuthResponse } from '@models/auth.model';
-import { environment } from '@environments/environment';
+import { environment } from 'src/environments/environment';
 import { UserService } from './user.service';
 import { User } from '@models/user.model';
 

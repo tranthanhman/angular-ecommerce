@@ -19,7 +19,7 @@
     "module": "ES2022",
     "baseUrl" : "./",
     "paths" : {
-      "@environments/*" : ["environments/*"],
+      "@environments/*" : ["src/environments/*"],
       "@layout/*" : ["./src/app/layout/*"],
       "@models/*" : ["./src/app/models/*"],
       "@services/*" : ["./src/app/services/*"],

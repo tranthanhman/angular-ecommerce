@@ -92,35 +92,9 @@
     <!-- Products grid -->
     <main class="flex-1">
       <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        <!-- Product Card -->
-        <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-          <div class="p-4">
-            <div class="relative mb-4">
-              <a href="/product/1">
-                <img src="/placeholder.svg" alt="iPhone 15 Pro Max" class="w-full h-48 object-cover rounded-lg" />
-              </a>
-              <span class="absolute top-2 left-2 bg-green-600 text-white px-2 py-1 text-xs rounded">Mới</span>
-            </div>
-            <a href="/product/1" class="block font-semibold hover:text-red-600 line-clamp-2">
-              iPhone 15 Pro Max 256GB
-            </a>
-            <div class="flex items-center space-x-2 mt-2">
-              <span class="text-yellow-400">⭐ 4.9</span>
-              <span class="text-sm text-gray-500">(234 đánh giá)</span>
-            </div>
-            <div class="mt-2">
-              <div class="text-lg font-bold text-red-600">34.990.000₫</div>
-              <div class="text-sm text-gray-500 line-through">36.990.000₫</div>
-            </div>
-            <div class="flex space-x-2 mt-4">
-              <button
-                class="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center justify-center">
-                🛒 Mua ngay
-              </button>
-              <button class="px-4 py-2 border rounded">♡</button>
-            </div>
-          </div>
-        </div>
+        @for(product of products(); track product._id){
+        <app-product-card [product]="product" />
+        }
       </div>
 
       <!-- Pagination -->

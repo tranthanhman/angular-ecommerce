@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from '@utils/api';
 import { AuthService } from './auth.service';
 import { Product } from '@models/product.model';
-import { environment } from '@environments/environment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
